@@ -2,15 +2,14 @@ import pyaudio
 import wave
 import threading
 
-# Настройки аудио
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-OUTPUT_FILENAME = "output1.wav"
+OUTPUT_FILENAME = "output.wav"
 
 frames = []
-is_recording = True  # глобальная переменная-флаг
+is_recording = True
 
 
 def record():
@@ -53,12 +52,9 @@ def wait_for_input():
 
 
 if __name__ == "__main__":
-    # Запускаем запись в отдельном потоке
     record_thread = threading.Thread(target=record)
     record_thread.start()
 
-    # Ожидаем пользовательский ввод в основном потоке
     wait_for_input()
 
-    # Дожидаемся завершения записи
     record_thread.join()

@@ -1,18 +1,20 @@
 import whisper
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def transcribe_audio(audio_path, output_path="transcription.txt"):
     print(f"🎧 Загружаю аудио: {audio_path}")
-    # Можно заменить на "base" или "tiny" для скорости
+
+    # Загружаем модель (можно заменить на "base", "medium", "large")
     model = whisper.load_model("small")
 
-    result = model.transcribe(audio_path, language="ru")
-    text = result["text"]
+    # Транскрибируем без указания языка — Whisper сам определит язык
+    result = model.transcribe(audio_path)
 
+    # Сохраняем каждую фразу на новой строке
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(text)
+        for segment in result["segments"]:
+            text = segment["text"].strip()
+            f.write(text + "\n")
 
     print(f"✅ Транскрипция завершена. Сохранено в: {output_path}")
 
