@@ -1,0 +1,6 @@
+[project]
+name = "Nota-AI"
+version = "0.1.0"
+description = "This is a open source project which helping to transcribe text from the audio"
+authors = [{ name = "Myroslav Repin" }]
+requires-python = ">=3.7"
